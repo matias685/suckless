@@ -28,7 +28,7 @@ static const char  col_pink[]  = "#ff79c6";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
     [SchemeNorm] = { col_white, col_gray1, col_gray1 }, // client's default
-    [SchemeSel]  = { col_white, col_gray2, col_pink },  // for selected client
+    [SchemeSel]  = { col_white, col_gray2, col_white },  // for selected client
 };
 
 /* tagging */
@@ -71,8 +71,9 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_white, "-sb", col_pink, "-sf", col_white, NULL };
+/* static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_white, "-sb", col_pink, "-sf", col_white, NULL };*/
 
+static const char *dmenucmd[] = {"dmenu_run", "-m", dmenumon, "-fn", dmenufont, NULL }; 
 static const char *termcmd[]  = { "st", NULL };
 static const char *browsercmd[] = { "firefox", NULL };
 static const char *filemanagercmd[] = { "pcmanfm", NULL };
