@@ -20,11 +20,9 @@ static const char *fonts[]          = { "Ubuntu Mono:style=Regular:size=14:antia
 static const char dmenufont[]       = "Ubuntu Mono:style=Regular:size=14:antialias=true:autohint=true";
 
 static const char  col_white[] = "#f8f8f2";
-static const char  col_gray1[] = "#282a36";
-static const char  col_gray2[] = "#44475a";
+static const char  col_gray1[] = "#181818";
+static const char  col_gray2[] = "#4d4d4d";
 static const char  col_black[] = "#21222C";
-static const char  col_com[]   = "#6272A4";
-static const char  col_pink[]  = "#ff79c6";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
     [SchemeNorm] = { col_white, col_gray1, col_gray1 }, // client's default
@@ -75,7 +73,7 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 
 static const char *dmenucmd[] = {"dmenu_run", "-m", dmenumon, "-fn", dmenufont, NULL }; 
 static const char *termcmd[]  = { "st", NULL };
-static const char *browsercmd[] = { "firefox", NULL };
+static const char *browsercmd[] = { "firefox-esr", NULL };
 static const char *filemanagercmd[] = { "pcmanfm", NULL };
 
 static Key keys[] = {
