@@ -6,9 +6,9 @@ static const char *downvol[] = { "/usr/bin/pactl", "set-sink-volume", "0", "-5%"
 static const char *mutevol[] = { "/usr/bin/pactl", "set-sink-mute",   "0", "toggle",  NULL };
 
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
-static const unsigned int gappx     = 5;        /* gaps between windows */
+static const unsigned int gappx     = 8;        /* gaps between windows */
 static const unsigned int snap      = 10;       /* snap pixel */
-
+static const int swallowfloating     = 0;        /* 1 means swallow floating windows by default */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
@@ -16,7 +16,8 @@ static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 
-static const char *fonts[]          = { "Ubuntu Mono:style=Regular:size=14:antialias=true:autohint=true", "Noto Color Emoji" "FontAwesome:style=Regular:size=12:antialias=true:autohint=true", "Noto Color Emoji:style=Regular:pixelsize18:antialias=true:autohint=true" };
+static const char *fonts[]          = { "DejaVu Sans Mono for Powerline:size=12",
+                                        "FontAwesome:style=Regular:size=12:antialias=true:autohint=true", };
 static const char dmenufont[]       = "Ubuntu Mono:style=Regular:size=14:antialias=true:autohint=true";
 
 static const char  col_white[] = "#f8f8f2";
@@ -37,9 +38,12 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            0,           -1 },
-	{ "Firefox",  NULL,       NULL,       0,            0,           -1 },
+    /* class        instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
+    { "Gimp",       NULL,     NULL,           0,            1,          0,           0,        -1 },
+    { "Firefox",    NULL,     NULL,           0,            0,          0,          -1,        -1 },
+    { "Pcmanfm",    NULL,     NULL,           0,            1,          0,          -1,        -1 },
+    { "st",         NULL,     NULL,           0,            0,          1,           0,        -1 },
+    { NULL,         NULL,     "Event Tester", 0,            0,          0,           1,        -1 }, /* xev */
 };
 
 /* layout(s) */
@@ -75,6 +79,7 @@ static const char *dmenucmd[] = {"dmenu_run", "-m", dmenumon, "-fn", dmenufont, 
 static const char *termcmd[]  = { "st", NULL };
 static const char *browsercmd[] = { "firefox-esr", NULL };
 static const char *filemanagercmd[] = { "pcmanfm", NULL };
+static const char *screenlockcmd[] = { "lock", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -85,6 +90,7 @@ static Key keys[] = {
     { MODKEY,                       XK_F12,    spawn,          {.v = upvol   } },
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
+    { MODKEY,                       XK_F2,     spawn,          {.v = screenlockcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY|ShiftMask,             XK_j,      rotatestack,    {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_k,      rotatestack,    {.i = -1 } },
