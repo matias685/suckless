@@ -70,5 +70,5 @@ static const char unknown_str[] = "n/a";
     { ram_used, " %s/", NULL },
     { ram_total, "%s|", NULL },
 	{ run_command, " %4s|", "amixer sget Master | awk -F\"[][]\" '/%/ { print $2 }' | head -n1" },
-	{ datetime, "%s",           "%d.%m.%Y %R" },
+	{ datetime, "%s", "%e %b %Y (%a) %R" },
 };
