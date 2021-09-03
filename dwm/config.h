@@ -3,7 +3,7 @@
 /* appearance */
 static const unsigned int borderpx  = 3;        /* border pixel of windows */
 static const unsigned int gappx     = 12;        /* gaps between windows */
-static const unsigned int snap      = 5;       /* snap pixel */
+static const unsigned int snap      = 0;       /* snap pixel */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
@@ -13,45 +13,44 @@ static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "Iosevka:style=Regular:size=12",
                                         "FontAwesome:style=Regular:size=12:antialias=true:autohint=true", };
 static const char dmenufont[]       = "Iosevka:Style=Regular:size=12:antialias=true:autohint=true";
-static const char  col_white[] = "#f8f8f2";
-static const char  col_gray1[] = "#181818";
-static const char  col_gray2[] = "#4d4d4d";
-static const char  col_black[] = "#21222C";
-static const char  col_beige[] = "#e2a478";
+static const char col_white[]       = "#f8f8f2";
+static const char col_gray1[]       = "#181818";
+static const char col_gray2[]       = "#4d4d4d";
+static const char col_black[]       = "#21222c";
+static const char col_beige[]       = "#e2a478";
 static const char *colors[][3]      = {
-        /*               fg         bg         border   */
-        [SchemeNorm] = { col_white, col_gray1, col_gray1 }, // client's default
-        [SchemeSel]  = { col_white, col_beige, col_beige },  // for selected client
+	/*               fg         bg         border   */
+	[SchemeNorm] = { col_white, col_gray1, col_gray1 },
+	[SchemeSel]  = { col_white, col_beige, col_white },
 };
 
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+
 static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title     tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,     0,            0,           -1 },
-	{ "Firefox",  NULL,       NULL,     0,            0,           -1 },
-	{ "firefox",  "Toolkit",  NULL,     0,		      1,	       -1 },
+	/* class      instance    title       tags mask     isfloating   monitor */
+    { "Firefox",  NULL,       NULL,     0,            0,           -1 },
+    { "firefox",  "Toolkit",  NULL,     0,            1,           -1 },
     { "firefox",  "Browser",  NULL,     0,            1,           -1 },
-	{ "Pcmanfm",  NULL,	      NULL,	    0,	    	  1,	       -1 },
-	{ "Sxiv",     NULL,	      NULL,	    0,	    	  1,	       -1 },
+    { "Pcmanfm",  NULL,       NULL,     0,            1,           -1 },
+    { "Sxiv",     NULL,       NULL,     0,            1,           -1 },
 
 };
 
 /* layout(s) */
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
-static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
+static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
+
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
-	{ "|M|",      centeredmaster },
-	{ ">M>",      centeredfloatingmaster },
 };
 
 /* key definitions */
@@ -67,43 +66,38 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = {"dmenu_run", "-m", dmenumon, "-fn", dmenufont, NULL }; 
+static const char *dmenucmd[] = {"dmenu_run", "-m", dmenumon, "-fn", dmenufont, NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *browsercmd[] = { "firefox", NULL };
 static const char *filemanagercmd[] = { "pcmanfm", NULL };
 static const char *upvol[]   = { "/usr/bin/pactl", "set-sink-volume", "0", "+5%",     NULL };
 static const char *downvol[] = { "/usr/bin/pactl", "set-sink-volume", "0", "-5%",     NULL };
 static const char *mutevol[] = { "/usr/bin/pactl", "set-sink-mute",   "0", "toggle",  NULL };
-static Key keys[] = {
 
+static Key keys[] = {
 	/* modifier                     key        function        argument */
     { MODKEY,                       XK_w,      spawn,          {.v = browsercmd } },  
-	{ MODKEY|ShiftMask,             XK_f,      spawn,          {.v = filemanagercmd } },
-	{ MODKEY,                       XK_F11,    spawn,          {.v = downvol } },
-    { MODKEY,                       XK_F10,    spawn,          {.v = mutevol } },
+    { MODKEY|ShiftMask,             XK_f,      spawn,          {.v = filemanagercmd } },
+    { MODKEY,                       XK_F11,    spawn,          {.v = downvol } },
     { MODKEY,                       XK_F12,    spawn,          {.v = upvol   } },
+    { MODKEY,                       XK_F10,    spawn,          {.v = mutevol } },
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY|ShiftMask,             XK_j,      rotatestack,    {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_k,      rotatestack,    {.i = -1 } },
-	{ MODKEY,                       XK_k,      focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_j,      focusstack,     {.i = -1 } },
+	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
+	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-	{ MODKEY|ShiftMask,             XK_h,      setcfact,       {.f = +0.25} },
-	{ MODKEY|ShiftMask,             XK_l,      setcfact,       {.f = -0.25} },
-	{ MODKEY|ShiftMask,             XK_o,      setcfact,       {.f =  0.00} },
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,                       XK_c,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,                       XK_u,      setlayout,      {.v = &layouts[3]} },
-	{ MODKEY,                       XK_o,      setlayout,      {.v = &layouts[4]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
@@ -113,8 +107,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
 	{ MODKEY,                       XK_minus,  setgaps,        {.i = -1 } },
-	{ MODKEY,                       XK_equal,  setgaps,        {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = 0  } },
+    { MODKEY,                       XK_plus,  setgaps,        {.i = +1 } },
+    { MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = 0  } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -130,7 +124,6 @@ static Key keys[] = {
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 static Button buttons[] = {
-
 	/* click                event mask      button          function        argument */
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
