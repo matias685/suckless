@@ -13,7 +13,6 @@ static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "Iosevka:style=Regular:size=12",
                                         "FontAwesome:style=Regular:size=12:antialias=true:autohint=true", };
 static const char dmenufont[]       = "Iosevka:Style=Regular:size=12:antialias=true:autohint=true";
-
 static const char  col_white[] = "#f8f8f2";
 static const char  col_gray1[] = "#181818";
 static const char  col_gray2[] = "#4d4d4d";
@@ -27,7 +26,6 @@ static const char *colors[][3]      = {
 
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
-
 static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
@@ -47,7 +45,6 @@ static const Rule rules[] = {
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
-
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "[]=",      tile },    /* first entry is default */
@@ -70,23 +67,20 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-/*static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };*/
 static const char *dmenucmd[] = {"dmenu_run", "-m", dmenumon, "-fn", dmenufont, NULL }; 
 static const char *termcmd[]  = { "st", NULL };
 static const char *browsercmd[] = { "firefox", NULL };
 static const char *filemanagercmd[] = { "pcmanfm", NULL };
-static const char *screenlockcmd[] = { "lock", NULL };
 static const char *upvol[]   = { "/usr/bin/pactl", "set-sink-volume", "0", "+5%",     NULL };
 static const char *downvol[] = { "/usr/bin/pactl", "set-sink-volume", "0", "-5%",     NULL };
 static const char *mutevol[] = { "/usr/bin/pactl", "set-sink-mute",   "0", "toggle",  NULL };
-
 static Key keys[] = {
+
 	/* modifier                     key        function        argument */
-    { MODKEY,                       XK_F2,     spawn,          {.v = screenlockcmd } },
     { MODKEY,                       XK_w,      spawn,          {.v = browsercmd } },  
 	{ MODKEY|ShiftMask,             XK_f,      spawn,          {.v = filemanagercmd } },
 	{ MODKEY,                       XK_F11,    spawn,          {.v = downvol } },
-    { MODKEY,                       XK_F9,     spawn,          {.v = mutevol } },
+    { MODKEY,                       XK_F10,    spawn,          {.v = mutevol } },
     { MODKEY,                       XK_F12,    spawn,          {.v = upvol   } },
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
@@ -136,6 +130,7 @@ static Key keys[] = {
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 static Button buttons[] = {
+
 	/* click                event mask      button          function        argument */
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },

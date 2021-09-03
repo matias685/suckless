@@ -2003,7 +2003,7 @@ tile(Monitor *m)
         mw = m->ww - m->gappx;
     for (i = 0, my = ty = m->gappx, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++)
 		if (i < m->nmaster) {
-            h = (m->wh - my) / (MIN(n, m->nmaster) - i) - m->gappx;
+            h = (m->wh - my) * (c->cfact / mfacts) - m->gappx;
             resize(c, m->wx + m->gappx, m->wy + my, mw - (2*c->bw) - m->gappx, h - (2*c->bw), 0);
             my += HEIGHT(c) + m->gappx;
 			mfacts -= c->cfact;
