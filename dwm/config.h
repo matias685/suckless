@@ -2,7 +2,7 @@
 
 /* appearance */
 static const unsigned int borderpx  = 3;        /* border pixel of windows */
-static const unsigned int gappx     = 10;        /* gaps between windows */
+static const unsigned int gappx     = 12;        /* gaps between windows */
 static const unsigned int snap      = 5;       /* snap pixel */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
@@ -10,18 +10,19 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "DejaVu Sans Mono for Powerline:size=12",
+static const char *fonts[]          = { "Iosevka:style=Regular:size=12",
                                         "FontAwesome:style=Regular:size=12:antialias=true:autohint=true", };
-static const char dmenufont[]       = "Ubuntu Mono:style=Regular:size=14:antialias=true:autohint=true";
+static const char dmenufont[]       = "Iosevka:Style=Regular:size=12:antialias=true:autohint=true";
 
 static const char  col_white[] = "#f8f8f2";
 static const char  col_gray1[] = "#181818";
 static const char  col_gray2[] = "#4d4d4d";
 static const char  col_black[] = "#21222C";
+static const char  col_beige[] = "#e2a478";
 static const char *colors[][3]      = {
         /*               fg         bg         border   */
         [SchemeNorm] = { col_white, col_gray1, col_gray1 }, // client's default
-        [SchemeSel]  = { col_white, col_gray2, col_white },  // for selected client
+        [SchemeSel]  = { col_white, col_beige, col_beige },  // for selected client
 };
 
 /* tagging */
@@ -32,9 +33,14 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            0,           -1 },
-	{ "Firefox",  NULL,       NULL,       0,            0,           -1 },
+	/* class      instance    title     tags mask     isfloating   monitor */
+	{ "Gimp",     NULL,       NULL,     0,            0,           -1 },
+	{ "Firefox",  NULL,       NULL,     0,            0,           -1 },
+	{ "firefox",  "Toolkit",  NULL,     0,		      1,	       -1 },
+    { "firefox",  "Browser",  NULL,     0,            1,           -1 },
+	{ "Pcmanfm",  NULL,	      NULL,	    0,	    	  1,	       -1 },
+	{ "Sxiv",     NULL,	      NULL,	    0,	    	  1,	       -1 },
+
 };
 
 /* layout(s) */
@@ -47,6 +53,8 @@ static const Layout layouts[] = {
 	{ "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
+	{ "|M|",      centeredmaster },
+	{ ">M>",      centeredfloatingmaster },
 };
 
 /* key definitions */
@@ -100,6 +108,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
+	{ MODKEY,                       XK_u,      setlayout,      {.v = &layouts[3]} },
+	{ MODKEY,                       XK_o,      setlayout,      {.v = &layouts[4]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
