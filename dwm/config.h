@@ -72,12 +72,14 @@ static const char *dmenucmd[] = {"dmenu_run", "-m", dmenumon, "-fn", dmenufont, 
 static const char *termcmd[]  = { "st", NULL };
 static const char *browsercmd[] = { "firefox", NULL };
 static const char *filemanagercmd[] = { "pcmanfm", NULL };
+static const char *lock[] = { "lock", NULL };
 static const char *upvol[]   = { "pactl", "set-sink-volume", "0", "+5%",     NULL };
 static const char *downvol[] = { "pactl", "set-sink-volume", "0", "-5%",     NULL };
 static const char *mutevol[] = { "pactl", "set-sink-mute",   "0", "toggle",  NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
+    { MODKEY|ShiftMask,             XK_l,      spawn,          {.v = lock } },
     { MODKEY,                       XK_w,      spawn,          {.v = browsercmd } },  
     { MODKEY|ShiftMask,             XK_f,      spawn,          {.v = filemanagercmd } },
     { MODKEY,                       XK_F11,    spawn,          {.v = downvol } },
