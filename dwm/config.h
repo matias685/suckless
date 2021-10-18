@@ -36,7 +36,6 @@ static const Rule rules[] = {
       { "firefox",   "Browser",   NULL,     0,            1,           -1 },
       { "Pcmanfm",   NULL,        NULL,     0,            1,           -1 },
       { "Sxiv",      NULL,        NULL,     0,            1,           -1 },
-      { "Bitwarden", "bitwarden", NULL,     0,            1            -1 },
 };
 
 /* layout(s) */
