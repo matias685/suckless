@@ -13,15 +13,13 @@ static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "Iosevka:style=Regular:size=12",
                                         "FontAwesome:style=Regular:size=12:antialias=true:autohint=true", };
 static const char dmenufont[]       = "Iosevka:Style=Regular:size=12:antialias=true:autohint=true";
-static const char col_white[]       = "#f8f8f2";
-static const char col_gray1[]       = "#181818";
-static const char col_gray2[]       = "#4d4d4d";
-static const char col_black[]       = "#21222c";
-static const char col_beige[]       = "#e2a478";
+static const char col_gray1[]       = "#201c1e";
+static const char col_gray2[]       = "#E5E9F0";
+static const char col_cyan[]        = "#9565f1";
 static const char *colors[][3]      = {
-	/*               fg         bg         border   */
-    [SchemeNorm] = { col_white, col_gray1, col_gray1 },
-    [SchemeSel]  = { col_white, col_gray2, col_white },
+		/*               fg         bg         border   */
+		[SchemeNorm] = { col_gray2, col_gray1, col_gray2 },
+		[SchemeSel]  = { col_gray2, col_cyan,  col_cyan  },
 };
 
 /* tagging */
@@ -33,17 +31,18 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class        instance    title     tags          mask     isfloating   monitor */
-      { "Firefox",  NULL,       NULL,     0,            0,           -1 },
-      { "firefox",  "Toolkit",  NULL,     0,            1,           -1 },
-      { "firefox",  "Browser",  NULL,     0,            1,           -1 },
-      { "Pcmanfm",  NULL,       NULL,     0,            1,           -1 },
-      { "Sxiv",     NULL,       NULL,     0,            1,           -1 },
+      { "Firefox",   NULL,        NULL,     0,            0,           -1 },
+      { "firefox",   "Toolkit",   NULL,     0,            1,           -1 },
+      { "firefox",   "Browser",   NULL,     0,            1,           -1 },
+      { "Pcmanfm",   NULL,        NULL,     0,            1,           -1 },
+      { "Sxiv",      NULL,        NULL,     0,            1,           -1 },
+      { "Bitwarden", "bitwarden", NULL,     0,            1            -1 },
 };
 
 /* layout(s) */
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
-static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
+static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
@@ -66,7 +65,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = {"dmenu_run", "-m", dmenumon, "-fn", dmenufont, NULL };
-static const char *termcmd[]  = { "st", NULL };
+static const char *termcmd[]  = { "alacritty", NULL };
 static const char *browsercmd[] = { "firefox", NULL };
 static const char *filemanagercmd[] = { "pcmanfm", NULL };
 static const char *upvol[]   = { "pactl", "set-sink-volume", "0", "+5%",     NULL };
@@ -118,6 +117,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+	{ MODKEY|ShiftMask,             XK_r,      quit,           {1} }, 
 };
 
 /* button definitions */
@@ -136,4 +136,3 @@ static Button buttons[] = {
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
-
