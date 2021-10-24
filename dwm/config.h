@@ -1,7 +1,5 @@
-/* See LICENSE file for copyright and license details. */
-
-/* appearance */
-static const unsigned int borderpx  = 3;        /* border pixel of windows */
+/* ---------------- settings ----------------- */
+static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int gappx     = 12;        /* gaps between windows */
 static const unsigned int snap      = 5;       /* snap pixel */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
@@ -13,6 +11,8 @@ static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "Iosevka:style=Regular:size=12",
                                         "FontAwesome:style=Regular:size=12:antialias=true:autohint=true", };
 static const char dmenufont[]       = "Iosevka:Style=Regular:size=12:antialias=true:autohint=true";
+
+/* --------------- colorscheme ----------------- */
 static const char col_gray1[]       = "#201c1e";
 static const char col_gray2[]       = "#E5E9F0";
 static const char col_cyan[]        = "#9565f1";
@@ -22,7 +22,7 @@ static const char *colors[][3]      = {
 		[SchemeSel]  = { col_gray2, col_cyan,  col_cyan  },
 };
 
-/* tagging */
+/* ----------------- tagging -------------------- */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
 static const Rule rules[] = {
@@ -38,8 +38,8 @@ static const Rule rules[] = {
       { "Sxiv",      NULL,        NULL,     0,            1,           -1 },
 };
 
-/* layout(s) */
-static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
+/* -------------- layouts -------------------- */
+static const float mfact     = 0.5; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 
@@ -50,7 +50,7 @@ static const Layout layouts[] = {
 	{ "[M]",      monocle },
 };
 
-/* key definitions */
+/* ---------------- key definitions --------------- */
 #define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
@@ -61,25 +61,29 @@ static const Layout layouts[] = {
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
-/* commands */
+/* ------------------- commands --------------------- */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = {"dmenu_run", "-m", dmenumon, "-fn", dmenufont, NULL };
-static const char *termcmd[]  = { "alacritty", NULL };
-static const char *browsercmd[] = { "firefox", NULL };
-static const char *filemanagercmd[] = { "pcmanfm", NULL };
+static const char *termcmd[]  = { "st", NULL };
+static const char *browser[] = { "firefox", NULL };
+static const char *filemanager[] = { "pcmanfm", NULL };
 static const char *upvol[]   = { "pactl", "set-sink-volume", "0", "+5%",     NULL };
 static const char *downvol[] = { "pactl", "set-sink-volume", "0", "-5%",     NULL };
 static const char *mutevol[] = { "pactl", "set-sink-mute",   "0", "toggle",  NULL };
+static const char *emoji[] = { "rofi", "-show", "emoji", "-modi", "emoji", NULL };
+
+/* ----------------- key bindings ------------------- */
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
-    { MODKEY,                       XK_w,      spawn,          {.v = browsercmd } },  
-    { MODKEY|ShiftMask,             XK_f,      spawn,          {.v = filemanagercmd } },
+    { MODKEY,                       XK_w,      spawn,          {.v = browser } },  
+    { MODKEY|ShiftMask,             XK_f,      spawn,          {.v = filemanager } },
     { MODKEY,                       XK_F11,    spawn,          {.v = downvol } },
     { MODKEY,                       XK_F12,    spawn,          {.v = upvol   } },
     { MODKEY,                       XK_F10,    spawn,          {.v = mutevol } },
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
+    { MODKEY,                       XK_e,      spawn,          {.v = emoji } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY|ShiftMask,             XK_j,      rotatestack,    {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_k,      rotatestack,    {.i = -1 } },
