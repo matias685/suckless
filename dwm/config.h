@@ -28,7 +28,7 @@ static const char *colors[][3]      = {
 	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
 };
 
-/* TAGGING */
+/* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
 static const Rule rules[] = {
@@ -44,10 +44,10 @@ static const Rule rules[] = {
       { "Sxiv",      NULL,        NULL,     0,            1,           -1 },
 };
 
-/* LAYOUTS */
-static const float mfact     = 0.52; /* factor of master area size [0.05..0.95] */
+/* layout(s) */
+static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
-static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
+static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
@@ -56,7 +56,7 @@ static const Layout layouts[] = {
 	{ "[M]",      monocle },
 };
 
-/* KEY DEFINITIONS */
+/* key definitions */
 #define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
@@ -67,7 +67,7 @@ static const Layout layouts[] = {
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
-/* COMMANDS */
+/* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = {"dmenu_run", "-m", dmenumon, "-fn", dmenufont, NULL };
 static const char *termcmd[]  = { "st", NULL };
@@ -78,7 +78,6 @@ static const char *mutevol[] = { "pactl", "set-sink-mute",   "0", "toggle",  NUL
 static const char *lock[] = { "slock", NULL };
 static const char *emoji[] = { "rofi", "-show", "emoji", "-modi", "emoji", NULL };
 
-/* KEY BINDINGS */
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_w,      spawn,          {.v = browser } },  
@@ -90,8 +89,6 @@ static Key keys[] = {
     { MODKEY|ShiftMask,             XK_l,      spawn,          {.v = lock } },
     { MODKEY,                       XK_e,      spawn,          {.v = emoji } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
-	{ MODKEY|ShiftMask,             XK_j,      rotatestack,    {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_k,      rotatestack,    {.i = -1 } },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
@@ -107,6 +104,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,		                XK_f,      togglefullscr,  {0} },
+    { MODKEY|ShiftMask,           XK_j,      pushdown,       {0} },
+	{ MODKEY|ShiftMask,           XK_k,      pushup,         {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
