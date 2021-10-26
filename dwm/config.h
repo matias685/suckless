@@ -1,7 +1,7 @@
-/* ---------------- settings ----------------- */
-static const unsigned int borderpx  = 2;        /* border pixel of windows */
+/* SETTINGS */
+static const unsigned int borderpx  = 3;        /* border pixel of windows */
 static const unsigned int gappx     = 12;        /* gaps between windows */
-static const unsigned int snap      = 5;       /* snap pixel */
+static const unsigned int snap      = 15;       /* snap pixel */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
@@ -12,36 +12,39 @@ static const char *fonts[]          = { "Iosevka:style=Regular:size=12",
                                         "FontAwesome:style=Regular:size=12:antialias=true:autohint=true", };
 static const char dmenufont[]       = "Iosevka:Style=Regular:size=12:antialias=true:autohint=true";
 
-/* --------------- colorscheme ----------------- */
-static const char col_gray1[]       = "#201c1e";
-static const char col_gray2[]       = "#E5E9F0";
-static const char col_cyan[]        = "#9565f1";
+/* COLOR SCHEME */
+static const char col_gray1[]       = "#222222";
+static const char col_gray2[]       = "#444444";
+static const char col_gray3[]       = "#bbbbbb";
+static const char col_gray4[]       = "#eeeeee";
+static const char col_cyan[]        = "#0f94d2";
 static const char *colors[][3]      = {
-		/*               fg         bg         border   */
-		[SchemeNorm] = { col_gray2, col_gray1, col_gray2 },
-		[SchemeSel]  = { col_gray2, col_cyan,  col_cyan  },
+	/*               fg         bg         border   */
+	[SchemeNorm] = { col_gray4, col_gray1, col_gray2 },
+	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
 };
 
-/* ----------------- tagging -------------------- */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+/* TAGGING */
+static const char *tags[] = { "", "", "", "", "", "", "", "", "" };
 
 static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class        instance    title     tags          mask     isfloating   monitor */
-      { "Firefox",   NULL,        NULL,     0,            0,           -1 },
+	/* class      instance    title       tags mask     isfloating   monitor */
+      { "Gimp",      NULL,        NULL,     0,            1,           -1 },
+      { "firefox",   "Navigator", NULL,     1 << 2,            0,           -1 },
       { "firefox",   "Toolkit",   NULL,     0,            1,           -1 },
       { "firefox",   "Browser",   NULL,     0,            1,           -1 },
       { "Pcmanfm",   NULL,        NULL,     0,            1,           -1 },
       { "Sxiv",      NULL,        NULL,     0,            1,           -1 },
 };
 
-/* -------------- layouts -------------------- */
-static const float mfact     = 0.5; /* factor of master area size [0.05..0.95] */
+/* LAYOUTS */
+static const float mfact     = 0.52; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
-static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
+static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
@@ -50,7 +53,7 @@ static const Layout layouts[] = {
 	{ "[M]",      monocle },
 };
 
-/* ---------------- key definitions --------------- */
+/* KEY DEFINITIONS */
 #define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
@@ -61,7 +64,7 @@ static const Layout layouts[] = {
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
-/* ------------------- commands --------------------- */
+/* COMMANDS */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = {"dmenu_run", "-m", dmenumon, "-fn", dmenufont, NULL };
 static const char *termcmd[]  = { "st", NULL };
@@ -70,19 +73,21 @@ static const char *filemanager[] = { "pcmanfm", NULL };
 static const char *upvol[]   = { "pactl", "set-sink-volume", "0", "+5%",     NULL };
 static const char *downvol[] = { "pactl", "set-sink-volume", "0", "-5%",     NULL };
 static const char *mutevol[] = { "pactl", "set-sink-mute",   "0", "toggle",  NULL };
+static const char *lock[] = { "slock", NULL };
 static const char *emoji[] = { "rofi", "-show", "emoji", "-modi", "emoji", NULL };
 
-/* ----------------- key bindings ------------------- */
 
+/* KEY BINDINGS */
 static Key keys[] = {
 	/* modifier                     key        function        argument */
-    { MODKEY,                       XK_w,      spawn,          {.v = browser } },  
+	{ MODKEY,                       XK_w,      spawn,          {.v = browser } },  
     { MODKEY|ShiftMask,             XK_f,      spawn,          {.v = filemanager } },
     { MODKEY,                       XK_F11,    spawn,          {.v = downvol } },
     { MODKEY,                       XK_F12,    spawn,          {.v = upvol   } },
     { MODKEY,                       XK_F10,    spawn,          {.v = mutevol } },
-	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
+    { MODKEY|ShiftMask,             XK_l,      spawn,          {.v = lock } },
     { MODKEY,                       XK_e,      spawn,          {.v = emoji } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY|ShiftMask,             XK_j,      rotatestack,    {.i = +1 } },
@@ -90,17 +95,18 @@ static Key keys[] = {
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
+	{ MODKEY,                       XK_p,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
+	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,                       XK_c,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
+	{ MODKEY|ShiftMask,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
+	{ MODKEY,		                XK_f,      togglefullscr,  {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
@@ -120,7 +126,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-	{ MODKEY|ShiftMask,             XK_r,      quit,           {1} }, 
+	{ MODKEY|ShiftMask, 		    XK_r,      quit,           {1} }, 
 };
 
 /* button definitions */
@@ -139,3 +145,4 @@ static Button buttons[] = {
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
+
