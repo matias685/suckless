@@ -241,6 +241,8 @@ static void setup(void);
 static void seturgent(Client *c, int urg);
 static void showhide(Client *c);
 static void sigchld(int unused);
+static void sighup(int unused);
+static void sigterm(int unused);
 static void spawn(const Arg *arg);
 static Monitor *systraytomon(Monitor *m);
 static void tag(const Arg *arg);
@@ -304,6 +306,7 @@ static void (*handler[LASTEvent]) (XEvent *) = {
 	[UnmapNotify] = unmapnotify
 };
 static Atom wmatom[WMLast], netatom[NetLast], xatom[XLast];
+static int restart = 0;
 static int running = 1;
 static Cur *cursor[CurLast];
 static Clr **scheme;
@@ -469,7 +472,7 @@ attachstack(Client *c)
 void
 buttonpress(XEvent *e)
 {
-	unsigned int i, x, click;
+	unsigned int i, x, click, occ = 0;
 	Arg arg = {0};
 	Client *c;
 	Monitor *m;
@@ -484,9 +487,14 @@ buttonpress(XEvent *e)
 	}
 	if (ev->window == selmon->barwin) {
 		i = x = 0;
-		do
+		for (c = m->clients; c; c = c->next)
+			occ |= c->tags == 255 ? 0 : c->tags;
+		do {
+			/* do not reserve space for vacant tags */
+			if (!(occ & 1 << i || m->tagset[m->seltags] & 1 << i))
+				continue;
 			x += TEXTW(tags[i]);
-		while (ev->x >= x && ++i < LENGTH(tags));
+		} while (ev->x >= x && ++i < LENGTH(tags));
 		if (i < LENGTH(tags)) {
 			click = ClkTagBar;
 			arg.ui = 1 << i;
@@ -840,19 +848,19 @@ drawbar(Monitor *m)
 
 	resizebarwin(m);
 	for (c = m->clients; c; c = c->next) {
-		occ |= c->tags;
+		occ |= c->tags == 255 ? 0 : c->tags;
 		if (c->isurgent)
 			urg |= c->tags;
 	}
 	x = 0;
 	for (i = 0; i < LENGTH(tags); i++) {
+		/* do not draw vacant tags */
+		if (!(occ & 1 << i || m->tagset[m->seltags] & 1 << i))
+		continue;
+
 		w = TEXTW(tags[i]);
 		drw_setscheme(drw, scheme[m->tagset[m->seltags] & 1 << i ? SchemeSel : SchemeNorm]);
 		drw_text(drw, x, 0, w, bh, lrpad / 2, tags[i], urg & 1 << i);
-		if (occ & 1 << i)
-			drw_rect(drw, x + boxs, boxs, boxw, boxw,
-				m == selmon && selmon->sel && selmon->sel->tags & 1 << i,
-				urg & 1 << i);
 		x += w;
 	}
 	w = blw = TEXTW(m->ltsymbol);
@@ -1470,6 +1478,7 @@ pushup(const Arg *arg) {
 void
 quit(const Arg *arg)
 {
+	if(arg->i) restart = 1;
 	running = 0;
 }
 
@@ -1813,6 +1822,9 @@ setup(void)
 	/* clean up any zombies immediately */
 	sigchld(0);
 
+	signal(SIGHUP, sighup);
+	signal(SIGTERM, sigterm);
+
 	/* init screen */
 	screen = DefaultScreen(dpy);
 	sw = DisplayWidth(dpy, screen);
@@ -1920,6 +1932,20 @@ sigchld(int unused)
 	if (signal(SIGCHLD, sigchld) == SIG_ERR)
 		die("can't install SIGCHLD handler:");
 	while (0 < waitpid(-1, NULL, WNOHANG));
+}
+
+void
+sighup(int unused)
+{
+	Arg a = {.i = 1};
+	quit(&a);
+}
+
+void
+sigterm(int unused)
+{
+	Arg a = {.i = 0};
+	quit(&a);
 }
 
 void
@@ -2650,6 +2676,7 @@ main(int argc, char *argv[])
 #endif /* __OpenBSD__ */
 	scan();
 	run();
+	if(restart) execvp(argv[0], argv);
 	cleanup();
 	XCloseDisplay(dpy);
 	return EXIT_SUCCESS;
