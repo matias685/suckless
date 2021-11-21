@@ -11,9 +11,9 @@ static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 // Fonts 
-static const char *fonts[]          = { "Ubuntu Mono:style=Regular:size=14",
+static const char *fonts[]          = { "Iosevka:style=Regular:size=13",
                                         "FontAwesome:style=Regular:size=12:antialias=true:autohint=true", };
-static const char dmenufont[]       = "Ubuntu Mono:Style=Regular:size=14:antialias=true:autohint=true";
+static const char dmenufont[]       = "Iosevka:Style=Regular:size=13:antialias=true:autohint=true";
 
 // Color Scheme 
 static const char col_dark[]        = "#1C1C1C";
@@ -27,11 +27,16 @@ static const char col_red[]	    = "#A80030";
 static const char *colors[][3]      = {
 	//               fg         bg         border 
 	[SchemeNorm] = { col_white, col_dark, col_black },
-	[SchemeSel]  = { col_white, col_red,  col_red  },
+	[SchemeSel]  = { col_white, col_dark,  col_red  },
 };
 
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+
+static const unsigned int ulinepad	= 5;	/* horizontal padding between the underline and tag */
+static const unsigned int ulinestroke	= 2;	/* thickness / height of the underline */
+static const unsigned int ulinevoffset	= 0;	/* how far above the bottom of the bar the line should appear */
+static const int ulineall 		= 0;	/* 1 to show underline on all tags, 0 for just the active ones */
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -39,8 +44,8 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
-      { "Firefox-esr",   "Toolkit",   NULL,     0,            1,           -1 },
-      { "Firefox-esr",   "Browser",   NULL,     0,            1,           -1 },
+      { "firefox",   "Toolkit",   NULL,     0,            1,           -1 },
+      { "firefox",   "Browser",   NULL,     0,            1,           -1 },
       { "Pcmanfm",   	 NULL,        NULL,     0,            1,           -1 },
       { "Sxiv",      	 NULL,        NULL,     0,            1,           -1 },
 };
