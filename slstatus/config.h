@@ -64,13 +64,14 @@ static const char unknown_str[] = "n/a";
  * wifi_essid          WiFi ESSID                      interface name (wlan0)
  */ static const struct arg args[] = {
 	/* function format          argument */
-/*	{ keymap, "%s|", NULL }, */
-    { netspeed_rx, " %sB/s |", "enp3s0" },
-    { netspeed_tx, "  %sB/s |", "enp3s0" },
-	{ cpu_perc,	"  %s%% |",	NULL }, 
+//	{ keymap, "%s|", NULL },
+//    { netspeed_rx, " %sB/s |", "enp3s0" },
+//    { netspeed_tx, "  %sB/s |", "enp3s0" },
+//	{ cpu_perc,	"  %s%% |",	NULL }, 
 /* 	{ ram_perc,	"[RAM  %s%%]",	NULL }, */
-    { ram_used, "  %s/", NULL },
-    { ram_total, "%s |", NULL },
-	{ run_command, " %4s |", "amixer sget Master | awk -F\"[][]\" '/%/ { print $2 }' | head -n1" },
-	{ datetime, "  %s", "%e %b %Y (%a) %R" },
+//    { ram_used, "  %s/", NULL },
+//    { ram_total, "%s |", NULL },
+	{ run_command, " %4s ", "amixer sget Master | awk -F\"[][]\" '/%/ { print $2 }' | head -n1" },
+	{ datetime, "  %s", "%R " },
+	{ datetime, "  %s", "%a, %d/%m/%Y" },
 };
