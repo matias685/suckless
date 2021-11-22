@@ -27,7 +27,7 @@ static const char col_red[]	    = "#A80030";
 static const char *colors[][3]      = {
 	//               fg         bg         border 
 	[SchemeNorm] = { col_white, col_dark, col_black },
-	[SchemeSel]  = { col_white, col_dark,  col_red  },
+	[SchemeSel]  = { col_white, col_dark,  col_blue  },
 };
 
 /* tagging */
@@ -81,7 +81,8 @@ static const char *browser[] = { "firefox", NULL };
 static const char *upvol[]   = { "pactl", "set-sink-volume", "0", "+5%",     NULL };
 static const char *downvol[] = { "pactl", "set-sink-volume", "0", "-5%",     NULL };
 static const char *mutevol[] = { "pactl", "set-sink-mute",   "0", "toggle",  NULL };
-static const char *lock[] = { "slock", NULL };
+static const char *lock[] = { "lock", NULL };
+static const char *screenshot[] = { "scrot", NULL };
 
 
 static Key keys[] = {
@@ -93,6 +94,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
     	{ MODKEY|ShiftMask,             XK_l,      spawn,          {.v = lock } },
+	{ MODKEY,			XK_s,	   spawn,	   {.v = screenshot } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
