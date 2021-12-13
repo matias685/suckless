@@ -1,6 +1,8 @@
-// Settings
+/* See LICENSE file for copyright and license details. */
+
+/* appearance */
 static const unsigned int borderpx  = 3;        /* border pixel of windows */
-static const unsigned int gappx     = 15;        /* gaps between windows */
+static const unsigned int gappx     = 6;        /* gaps between windows */
 static const unsigned int snap      = 5;       /* snap pixel */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
@@ -8,41 +10,24 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-
 // Fonts 
-static const char *fonts[]          = { "Iosevka:style=Regular:size=13",
-                                        "FontAwesome:style=Regular:size=12:antialias=true:autohint=true", };
-static const char dmenufont[]       = "Iosevka:Style=Regular:size=13:antialias=true:autohint=true";
-
-// Color Scheme 
-static const char col_bg[]	    = "#282828";
-static const char col_bg3[]	    = "#95A9AC";
-static const char col_sel[]	    = "#4A3C3C";
-static const char col_bor[]	    = "#AEC8CE";
-static const char col_yellow[]	    = "#FCE28D";
-static const char col_dark[]        = "#1C1C1C";
-static const char col_black[]       = "#121212";
-static const char col_gray[]        = "#696969";
-static const char col_white[]       = "#eeeeee";
-static const char col_white2[]      = "#bbbbbb";
-static const char col_blue[]        = "#83a598";
-static const char col_cyan[]	    = "#2aa1b3";
-static const char col_green[]	    = "#26a269";
-static const char col_purple[]	    = "#9370DB";
-static const char col_red[]	    = "#A80030";
+static const char *fonts[]          = { "Iosevka:style=Regular:size=12",
+                                        "Font Awesome 5 Free:style=Solid:size=12:antialias=true:autohint=true", };
+static const char dmenufont[]       = "Iosevka:Style=Regular:size=12:antialias=true:autohint=true";
+static const char col_gray1[]       = "#222222";
+static const char col_gray2[]       = "#444444";
+static const char col_gray3[]       = "#bbbbbb";
+static const char col_gray4[]       = "#eeeeee";
+static const char col_gray5[]	    = "#606060";
+static const char col_cyan[]        = "#005577";
 static const char *colors[][3]      = {
-	//               fg         bg         border 
-	[SchemeNorm] = { col_white, col_dark, col_bor },
-	[SchemeSel]  = { col_white, col_dark, col_yellow  },
+	/*               fg         bg         border   */
+	[SchemeNorm] = { col_gray4, col_gray1, col_gray2 },
+	[SchemeSel]  = { col_gray4, col_gray5,  col_gray5  },
 };
 
-// Tags
+/* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
-
-static const unsigned int ulinepad	= 5;	/* horizontal padding between the underline and tag */
-static const unsigned int ulinestroke	= 2;	/* thickness / height of the underline */
-static const unsigned int ulinevoffset	= 0;	/* how far above the bottom of the bar the line should appear */
-static const int ulineall 		= 0;	/* 1 to show underline on all tags, 0 for just the active ones */
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -50,14 +35,13 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
-      { "Firefox-esr",   "Toolkit",   NULL,     0,            1,           -1 },
-      { "Firefox-esr",   "Browser",   NULL,     0,            1,           -1 },
-      { "Pcmanfm",   	 NULL,        NULL,     0,            1,           -1 },
-      { "Sxiv",      	 NULL,        NULL,     0,            1,           -1 },
+      { "Firefox",   "Toolkit",   NULL,     0,            1,           -1 },
+      { "Firefox",   "Browser",   NULL,     0,            1,           -1 },
+      { "Sxiv",      NULL,        NULL,     0,            1,           -1 },
 };
 
-// Layouts
-static const float mfact     = 0.51; /* factor of master area size [0.05..0.95] */
+/* layout(s) */
+static const float mfact     = 0.53; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 
@@ -79,26 +63,24 @@ static const Layout layouts[] = {
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
-// Commands
+/* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = {"dmenu_run", "-m", dmenumon, "-fn", dmenufont, NULL };
-static const char *termcmd[]  = { "urxvt", NULL };
-static const char *browser[] = { "firefox-esr", NULL };
+static const char *termcmd[]  = { "st", NULL };
+static const char *browser[] = { "firefox", NULL };
 static const char *upvol[]   = { "pactl", "set-sink-volume", "0", "+5%",     NULL };
 static const char *downvol[] = { "pactl", "set-sink-volume", "0", "-5%",     NULL };
 static const char *mutevol[] = { "pactl", "set-sink-mute",   "0", "toggle",  NULL };
 static const char *lock[] = { "lock", NULL };
 static const char *screenshot[] = { "scrot", "/home/matias/Pictures/Screenshots/%Y-%m-%d-%H%M%S.png", NULL };
 
-
-// Key bindings
 static Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_w,      spawn,          {.v = browser } },  
+{ MODKEY,                       XK_w,      spawn,          {.v = browser } },  
     	{ MODKEY,                       XK_F11,    spawn,          {.v = downvol } },
     	{ MODKEY,                       XK_F12,    spawn,          {.v = upvol   } },
     	{ MODKEY,                       XK_F10,    spawn,          {.v = mutevol } },
-	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
+	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
     	{ MODKEY|ShiftMask,             XK_l,      spawn,          {.v = lock } },
 	{ MODKEY|ShiftMask,		XK_s,	   spawn,	   {.v = screenshot } },
@@ -106,12 +88,12 @@ static Key keys[] = {
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_p,      incnmaster,     {.i = -1 } },
+	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY,	                XK_c,      killclient,     {0} },
+	{ MODKEY,		                XK_c,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
@@ -126,9 +108,6 @@ static Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	{ MODKEY,                       XK_minus,  setgaps,        {.i = -1 } },
-	{ MODKEY,                       XK_equal,  setgaps,        {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = 0  } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -139,7 +118,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-	{ MODKEY|ShiftMask, 		XK_r,      quit,           {1} }, 
+	{ MODKEY|ShiftMask, 			XK_r,      quit,           {1} }, 
 };
 
 /* button definitions */
