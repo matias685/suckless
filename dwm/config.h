@@ -11,9 +11,10 @@ static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 // Fonts 
-static const char *fonts[]          = { "Iosevka:style=Regular:size=14",
-                                        "Font Awesome 5 Free:style=Solid:size=14:antialias=true:autohint=true", };
-static const char dmenufont[]       = "Iosevka:Style=Regular:size=14:antialias=true:autohint=true";
+static const char *fonts[]          = { "Iosevka:Style=Regular:size=13",
+                                        "Font Awesome 5 Free:style=Solid:size=13:antialias=true:autohint=true",
+					                    "Iosevka Nerd Font:style=Regular:size=13", };
+static const char dmenufont[]       = "Iosevka:Style=Regular:size=13:antialias=true:autohint=true";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
@@ -27,7 +28,8 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+//static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+static const char *tags[] = { "", "", "", "", "", "", "", "", "" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -37,12 +39,13 @@ static const Rule rules[] = {
 	/* class      instance    title       tags mask     isfloating   monitor */
     { "firefox",   "Toolkit",   NULL,     0,            1,           -1 },
     { "firefox",   "Browser",   NULL,     0,            1,           -1 },
-    { "firefox",   "Places",    NULL,	  0,		1,	     -1 },
+    { "firefox",   "Places",    NULL,	  0,		    1,	         -1 },
     { "Sxiv",      NULL,        NULL,     0,            1,           -1 },
+    { "Pcsx2",     NULL,        NULL,     0,            1,           -1 },
 };
 
 /* layout(s) */
-static const float mfact     = 0.52; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 
@@ -68,23 +71,26 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = {"dmenu_run", "-m", dmenumon, "-fn", dmenufont, NULL };
 static const char *termcmd[]  = { "st", NULL };
+static const char scratchpadname[] = "scratchpad";
+static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
 static const char *browser[] = { "firefox", NULL };
 static const char *upvol[]   = { "pactl", "set-sink-volume", "0", "+5%",     NULL };
 static const char *downvol[] = { "pactl", "set-sink-volume", "0", "-5%",     NULL };
 static const char *mutevol[] = { "pactl", "set-sink-mute",   "0", "toggle",  NULL };
-static const char *lock[] = { "lock", NULL };
+static const char *lock[] = { "xlock", NULL };
 static const char *screenshot[] = { "scrot", "/home/matias/Pictures/Screenshots/%Y-%m-%d-%H%M%S.png", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_w,      spawn,          {.v = browser } },  
-    { MODKEY,                       XK_F11,    spawn,          {.v = downvol } },
-    { MODKEY,                       XK_F12,    spawn,          {.v = upvol   } },
-    { MODKEY,                       XK_F10,    spawn,          {.v = mutevol } },
+   	{ MODKEY,                       XK_F11,    spawn,          {.v = downvol } },
+   	{ MODKEY,                       XK_F12,    spawn,          {.v = upvol   } },
+   	{ MODKEY,                       XK_F10,    spawn,          {.v = mutevol } },
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
-    { MODKEY|ShiftMask,             XK_l,      spawn,          {.v = lock } },
-	{ MODKEY|ShiftMask,				XK_s,	   spawn,	   	   {.v = screenshot } },
+	{ MODKEY,                       XK_u,  togglescratch,  {.v = scratchpadcmd } },
+   	{ MODKEY|ShiftMask,             XK_l,      spawn,          {.v = lock } },
+	{ MODKEY|ShiftMask,		        XK_s,	   spawn,	   {.v = screenshot } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
