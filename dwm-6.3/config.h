@@ -13,19 +13,25 @@ static const int showbar            = 1;     /* 0 means no bar */
 static const int topbar             = 1;     /* 0 means bottom bar */
 static const char *fonts[]          = { "Iosevka:size=12" };
 static const char dmenufont[]       = "Iosevka:size=12";
+static const char dmenufont[]       = "Iosevka:size=12";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
 static const char col_gray5[]	    = "#C1C1B5";
-static const char col_black[]	    = "#1E2022";
+static const char col_black[]	    = "#171421";
+static const char col_black2[]      = "#181818";
 static const char col_cyan[]        = "#005577";
+static const char col_blue[]	    = "#12488b";
 static const char col_aqua[]	    = "#3E7F89";
+static const char col_green[]	    = "#26a269";
+static const char col_magenta[]	    = "#a347ba";
+static const char col_red[]	    = "#3B1510";
 static const char *colors[][3]      = {
 
 	/*               fg         bg         border   */
-	[SchemeNorm] = { col_gray4, col_black, col_black },
-	[SchemeSel]  = { col_gray4, col_aqua,  col_aqua },
+	[SchemeNorm] = { col_gray4, col_black2, col_black },
+	[SchemeSel]  = { col_gray4, col_blue,  col_blue },
 };
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
@@ -80,10 +86,12 @@ static const char *screenshot[] = { "scrot", "/home/matias/Pictures/Screenshots/
 static const char *htopcmd[] = { "st", "-e", "htop", NULL };
 static const char *filescmd[] = { "st", "-e", "lf", NULL };
 static const char *emojicmd[] = { "dmenuunicode", NULL };
+static const char *calcmd[] = { "st", "-e", "calcurse", NULL };
 static const char *pmenucmd[] = { "pmenu", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
+	{ MODKEY|ControlMask,		XK_c,	   spawn,	   {.v = calcmd } },
 	{ MODKEY,			XK_e,	   spawn,	   {.v = emojicmd } },
 	{ MODKEY,			XK_r,	   spawn,	   {.v = filescmd } },
 	{ MODKEY|ControlMask,		XK_h,	   spawn,	   {.v = htopcmd } },
