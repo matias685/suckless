@@ -131,6 +131,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_z,      setgaps,        {.i = +5 } },
 	{ MODKEY|ShiftMask,             XK_minus,  setgaps,        {.i = GAP_RESET } },
 	{ MODKEY|ControlMask,           XK_z,      setgaps,        {.i = GAP_TOGGLE} },
+	{ MODKEY,                       XK_n,      shiftview,  { .i = +1 } },
+	{ MODKEY|ShiftMask,             XK_n,      shiftview,  { .i = -1 } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
