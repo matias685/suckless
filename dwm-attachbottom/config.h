@@ -10,7 +10,8 @@ static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;     /* 0 means no bar */
 static const int topbar             = 1;     /* 0 means bottom bar */
 static const char *fonts[]          = { "Iosevka:size=12",
-					"Font Awesome 6 Free Solid:size=12", };
+					"Font Awesome 6 Free Solid:size=12",
+                                        "Noto Color Emoji", };
 static const char dmenufont[]       = "Iosevka:size=12";
 static const char col_gray1[]       = "#181818";
 static const char col_gray2[]       = "#444444";
@@ -36,6 +37,9 @@ static const Rule rules[] = {
     { "firefox",   "Browser",   NULL,     0,            1,           -1 },
     { "firefox",   "Places",    NULL,	  0,		1,	     -1 },
     { "Pcsx2",     "pcsx2",     NULL,     0,            1,           -1 },
+    { "Gcolor3",   "gcolor3",   NULL,     0,            1,           -1 },
+    { "Steam",     "Steam",     "Friends List", 0,       1,           -1 },
+    { "Steam",     "Steam",     "Steam - News (1 of 4)", 0,       1,           -1 },
 };
 
 /* layout(s) */
@@ -131,6 +135,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_z,      setgaps,        {.i = +5 } },
 	{ MODKEY|ShiftMask,             XK_minus,  setgaps,        {.i = GAP_RESET } },
 	{ MODKEY|ControlMask,           XK_z,      setgaps,        {.i = GAP_TOGGLE} },
+	{ MODKEY,                       XK_n,      shiftview,  { .i = +1 } },
+	{ MODKEY|ShiftMask,             XK_n,      shiftview,  { .i = -1 } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
