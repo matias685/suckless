@@ -1,11 +1,9 @@
-
-
 /*
  * appearance
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "Iosevka:style=Regular:pixelsize=18";
+static char *font = "Inconsolata Nerd Font:pixelsize=24:antialias=true:autohint=true";
 /* Spare fonts */
 static char *font2[] = {
 	"FontAwesome:style=Regular:pixelsize=18:antialias=true:autohint=true", // Powerline 
@@ -129,7 +127,7 @@ static const char *colorname[] = {
 
 	/* more colors can be added after 255 to use with DefaultXX */
 	"#191919",
-	"#d8dee9",
+	"#ffffff",
 	"#181818",
 };
 
