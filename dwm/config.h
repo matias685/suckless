@@ -28,15 +28,16 @@ static const Rule rules[] = {
 	 	WM_CLASS(STRING) = instance, class
 	 	WM_NAME(STRING) = title
 	 */
-	// class           			instance           		 title                           tags mask     isfloating   monitor
-    { "firefox",   				"Toolkit",    			 NULL,                           0,            1,           -1 },
-    { "firefox",   				"Browser",    			 NULL,                           0,            1,           -1 },
-    { "firefox",   				"Places",     			 NULL,                           0,	       1,	    -1 },
-    //{ "pcsx2-qt",           			"pcsx2-qt",      			 NULL,                           0,            1,           -1 },
-    { "Gcolor3",       				"gcolor3",    			 NULL,                           0,            1,           -1 },
-    { "thunderbird",   				"Msgcompose", 			 NULL,                           0,            1,           -1 },
-    { "thunderbird",   				"Mail",       			 "About Mozilla Thunderbird",    0,            1,           -1 },
-    { "net-runelite-launcher-Launcher", 	"net-runelite-launcher-Launcher", NULL, 			 0, 	       1,           -1 },
+	// class           		instance           		 title                           tags mask     isfloating   monitor
+    { "firefox",   			"Toolkit",    			 NULL,                           0,            1,           -1 },
+    { "firefox",   			"Browser",    			 NULL,                           0,            1,           -1 },
+    { "firefox",   			"Places",     			 NULL,                           0,	           1,	        -1 },
+    //{ "pcsx2-qt",        	"pcsx2-qt",      		 NULL,                           0,            1,           -1 },
+    { "Gcolor3",       		"gcolor3",    			 NULL,                           0,            1,           -1 },
+    { "thunderbird",   		"Msgcompose", 			 NULL,                           0,            1,           -1 },
+    { "thunderbird",   		"Mail",       			 "About Mozilla Thunderbird",    0,            1,           -1 },
+    { "Steam",   			"Steam",       			 "Friends List",                 0,            1,           -1 },
+    { "Steam",   			"Steam",       			 "Steam - News",                 0,            1,           -1 },
 };
 
 // layout(s) 
@@ -67,7 +68,8 @@ static const Layout layouts[] = {
 
 // commands 
 static char dmenumon[2] = "0"; // component of dmenucmd, manipulated in spawn() 
-static const char *dmenucmd[] = {"dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-i", "-p", "Run:", "-l", "5", NULL };
+//static const char *dmenucmd[] = {"dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-i", NULL };
+static const char *dmenucmd[] = {"dmenu_run", NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *roficmd[] = { "j4-dmenu-desktop", "--dmenu=dmenu -i", NULL};
 static const char scratchpadname[] = "scratchpad";
