@@ -1,16 +1,18 @@
+/* See LICENSE file for copyright and license details. */
+
 /*
  * appearance
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "Inconsolata Nerd Font:pixelsize=24:antialias=true:autohint=true";
+static char *font = "Iosevka Nerd Font:pixelsize=24:antialias=true:autohint=true";
 /* Spare fonts */
 static char *font2[] = {
 	"FontAwesome:style=Regular:pixelsize=18:antialias=true:autohint=true", // Powerline 
     "Noto Color Emoji:style=Regular:pixelsize18:antialias=true:autohint=true" // Unicode
 };
 
-static int borderpx = 2;
+static int borderpx = 5;
 
 /*
  * What program is execed by st depends of these precedence rules:
@@ -98,7 +100,7 @@ char *termname = "st-256color";
 unsigned int tabspaces = 8;
 
 /* bg opacity */
-float alpha = 1;
+float alpha = 0.9;
 
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
@@ -131,14 +133,13 @@ static const char *colorname[] = {
 	"#181818",
 };
 
-
 /*
  * Default colors (colorname index)
  * foreground, background, cursor, reverse cursor
  */
 unsigned int defaultfg = 257;
 unsigned int defaultbg = 258;
-static unsigned int defaultcs = 257;
+unsigned int defaultcs = 257;
 static unsigned int defaultrcs = 256;
 
 /*
@@ -148,7 +149,7 @@ static unsigned int defaultrcs = 256;
  * 6: Bar ("|")
  * 7: Snowman ("☃")
  */
-static unsigned int cursorshape = 6;
+static unsigned int cursorshape = 4;
 
 /*
  * Default columns and rows numbers
@@ -181,11 +182,10 @@ static uint forcemousemod = ShiftMask;
  * Internal mouse shortcuts.
  * Beware that overloading Button1 will disable the selection.
  */
-const unsigned int mousescrollincrement = 1;
 static MouseShortcut mshortcuts[] = {
 	/* mask                 button   function        argument       release */
-	{ ShiftMask,            Button4, kscrollup,      {.i = mousescrollincrement} },
-	{ ShiftMask,            Button5, kscrolldown,    {.i = mousescrollincrement} },
+	{ ShiftMask,            Button4, kscrollup,      {.i = 1} },
+	{ ShiftMask,            Button5, kscrolldown,    {.i = 1} },
 	{ XK_ANY_MOD,           Button2, selpaste,       {.i = 0},      1 },
 	{ ShiftMask,            Button4, ttysend,        {.s = "\033[5;2~"} },
 	{ XK_ANY_MOD,           Button4, ttysend,        {.s = "\031"} },
@@ -195,7 +195,7 @@ static MouseShortcut mshortcuts[] = {
 
 /* Internal keyboard shortcuts. */
 #define MODKEY Mod1Mask
-#define TERMMOD (Mod1Mask|ShiftMask)
+#define TERMMOD (ControlMask|ShiftMask)
 
 static Shortcut shortcuts[] = {
 	/* mask                 keysym          function        argument */
@@ -203,16 +203,16 @@ static Shortcut shortcuts[] = {
 	{ ControlMask,          XK_Print,       toggleprinter,  {.i =  0} },
 	{ ShiftMask,            XK_Print,       printscreen,    {.i =  0} },
 	{ XK_ANY_MOD,           XK_Print,       printsel,       {.i =  0} },
-	{ TERMMOD,              XK_K,       	zoom,           {.f = +1} },
-	{ TERMMOD,              XK_J,        	zoom,           {.f = -1} },
-	{ TERMMOD,              XK_U,       	zoom,           {.f = +2} },
-	{ TERMMOD,              XK_D,        	zoom,           {.f = -2} },
+	{ TERMMOD,              XK_Prior,       zoom,           {.f = +1} },
+	{ TERMMOD,              XK_Next,        zoom,           {.f = -1} },
 	{ TERMMOD,              XK_Home,        zoomreset,      {.f =  0} },
 	{ TERMMOD,              XK_C,           clipcopy,       {.i =  0} },
 	{ TERMMOD,              XK_V,           clippaste,      {.i =  0} },
 	{ TERMMOD,              XK_Y,           selpaste,       {.i =  0} },
 	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
+	{ ShiftMask,            XK_Page_Up,     kscrollup,      {.i = -1} },
+	{ ShiftMask,            XK_Page_Down,   kscrolldown,    {.i = -1} },
 	{ MODKEY,           	XK_k,     	kscrollup,      {.i = 1} },
 	{ MODKEY,               XK_j,   	kscrolldown,    {.i = 1} },
 	{ MODKEY,           	XK_u,     	kscrollup,      {.i = -1} },
